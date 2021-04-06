@@ -9,7 +9,7 @@ size_of_canvas = 700
 size_of_outskirts = 6 * size_of_grid
 size_of_font = 30
 
-nonogram=[[1,1,1,1,1,0,0,0,0,0,1,1,1,1,1],
+'''nonogram=[[1,1,1,1,1,0,0,0,0,0,1,1,1,1,1],
           [1,1,1,0,0,1,1,1,1,1,0,0,1,1,1],
           [1,1,0,1,1,1,1,1,1,1,1,1,0,1,1],
           [1,0,1,1,0,0,0,1,0,0,0,1,1,0,1],
@@ -24,7 +24,7 @@ nonogram=[[1,1,1,1,1,0,0,0,0,0,1,1,1,1,1],
           [1,1,0,1,1,1,1,1,1,1,1,1,0,1,1],
           [1,1,1,0,0,1,1,1,1,1,0,0,1,1,1],
           [1,1,1,1,1,0,0,0,0,0,1,1,1,1,1]]#example from polish wikipedia from 'methods of solving' section'''
-'''nonogram=[[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+nonogram=[[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -38,7 +38,7 @@ nonogram=[[1,1,1,1,1,0,0,0,0,0,1,1,1,1,1],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]]'''
+          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]]
 answer_nonogram = np.zeros((size_of_nonogram,size_of_nonogram),dtype=int)
 marked_grid_colour = '#444444'
 background_colour = '#F5F5F5'
@@ -54,6 +54,8 @@ class Nonogram():
 
         # Input from user in form of clicks
         self.window.bind('<Button-1>', self.click)
+
+        self.window.bind('<Return>', self.end_game)
 
         self.initialize_nonogram()
         self.puzzle_info(nonogram)
@@ -163,6 +165,11 @@ class Nonogram():
 
         return False
 
+    def end_game(self,event):
+        if self.win == True:
+            self.canvas.delete("all")
+            self.print_nonogram()
+
 
     def print_nonogram(self):
         for i in range(size_of_nonogram):
@@ -182,11 +189,10 @@ class Nonogram():
         self.win = self.check_win()
         self.initialize_nonogram()#used to keep thick lines
         if self.win == True:
-            '''self.canvas.create_text(size_of_outskirts / 2,size_of_outskirts / 2, text = "Wygrałeś!", font="Times 20")
+            self.canvas.create_text(size_of_outskirts / 2,size_of_outskirts / 2, text = "Wygrałeś!", font="Times 20")
             self.canvas.create_text(size_of_outskirts / 2, size_of_outskirts / 2 + 20,
-             text="Naciśnij enter aby kontynuować", font="Times 10")'''#TODO find sth what works in that way
-            self.canvas.delete("all")
-            self.print_nonogram()
+             text="Naciśnij enter aby kontynuować", font="Times 10")
+
 
 
 
