@@ -1,4 +1,5 @@
-
+# 1 is coding black instead of white, there's two functionalities: switching colours between white and black and program autochecking
+#corretnes of solution but doesn't show numbers of grids in each columns/rows
 from tkinter import *
 import numpy as np
 
