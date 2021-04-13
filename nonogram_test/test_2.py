@@ -129,8 +129,8 @@ class Nonogram():
                                             font="Times 20", text=str(array[j]))
             array.clear()
 
-    def change_grid_status(self, click_position):#Function takes click position (x and y coordinates) checks if the click was inside board calculates square coordinates
-                                                 #then changing answer nonogram and colour of proper square
+    def change_grid_status(self, click_position):#Function takes click position (x and y coordinates) checks if the click was inside board, calculates square coordinates
+                                                 #and then changing answer nonogram and colour of proper square
         #treating left upper corner like coords 0,0
         click_position[0]-=size_of_outskirts
         click_position[1]-=size_of_outskirts
@@ -165,7 +165,7 @@ class Nonogram():
 
         return False
 
-    def end_game(self,event):#Function clears window and runnnig print_nonogram function
+    def end_game(self,event):#Function clears window and runs print_nonogram function
         if self.win == True:
             self.canvas.delete("all")
             self.print_nonogram()
