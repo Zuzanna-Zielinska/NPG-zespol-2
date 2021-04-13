@@ -1,0 +1,2 @@
+Folder z plikami gry
+
