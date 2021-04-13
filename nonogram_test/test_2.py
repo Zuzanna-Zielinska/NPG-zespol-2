@@ -2,11 +2,11 @@
 from tkinter import *
 import numpy as np
 
-size_of_nonogram = 15
-size_of_grid = 30
+size_of_nonogram = 15 #lenght of nonograms rows/columns
+size_of_grid = 30 #distance between lines in pixels 
 size_of_board = size_of_nonogram*size_of_grid
-size_of_canvas = 700
-size_of_outskirts = 6 * size_of_grid
+size_of_canvas = 700 #size of window
+size_of_outskirts = 6 * size_of_grid #distance from window border to board
 size_of_font = 30
 
 '''nonogram=[[1,1,1,1,1,0,0,0,0,0,1,1,1,1,1],
@@ -65,7 +65,7 @@ class Nonogram():
     def mainloop(self):
         self.window.mainloop()
 
-    def initialize_nonogram(self):
+    def initialize_nonogram(self):#function is creating all lines
         for i in range(size_of_nonogram + 1):
             self.canvas.create_line(i * size_of_grid + size_of_outskirts, 0, i * size_of_grid + size_of_outskirts,
                                     size_of_board + size_of_outskirts, width = 2)
@@ -76,8 +76,8 @@ class Nonogram():
 
 
     #Drawing and logical functions
-
-    def puzzle_info(self,nonogram):#TODO Optimalization of this function
+                                   #TODO Optimalization of this function
+    def puzzle_info(self,nonogram):#Function takes a nonogram and then calculates the numbers that should help the user solve the puzzle, and then writes them
         #columns
         ones_counter = 0
         columns = list(zip(*nonogram))
@@ -129,8 +129,8 @@ class Nonogram():
                                             font="Times 20", text=str(array[j]))
             array.clear()
 
-    def change_grid_status(self, click_position):
-
+    def change_grid_status(self, click_position):#Function takes click position (x and y coordinates) checks if the click was inside board calculates square coordinates
+                                                 #then changing answer nonogram and colour of proper square
         #treating left upper corner like coords 0,0
         click_position[0]-=size_of_outskirts
         click_position[1]-=size_of_outskirts
@@ -158,20 +158,20 @@ class Nonogram():
             answer_nonogram[row][col] = 0
             self.canvas.create_rectangle(x_position,y_position,x_position + size_of_grid,y_position + size_of_grid, fill = background_colour)
 
-    def check_win(self):
+    def check_win(self):#Function is checking equality between answer nonogram and solved one
         if (nonogram == answer_nonogram).all():
             print("win")
             return True
 
         return False
 
-    def end_game(self,event):
+    def end_game(self,event):#Function clears window and runnnig print_nonogram function
         if self.win == True:
             self.canvas.delete("all")
             self.print_nonogram()
 
 
-    def print_nonogram(self):
+    def print_nonogram(self):#Function is writing solved nonogram
         for i in range(size_of_nonogram):
             for j in range(size_of_nonogram):
                 if nonogram[i][j] == 1:
@@ -183,7 +183,7 @@ class Nonogram():
         for i in range(size_of_nonogram + 1):
             self.canvas.create_line(0, i * size_of_grid, size_of_board, i * size_of_grid, width = 2)
 
-    def click(self, event):
+    def click(self, event):#Function realizing all operations that should be done after users click
         click_position = [event.x, event.y]
         self.change_grid_status(click_position)
         self.win = self.check_win()
