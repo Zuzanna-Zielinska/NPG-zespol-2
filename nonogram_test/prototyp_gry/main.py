@@ -50,11 +50,9 @@ class Nonogram():
         self.sth_button.place(x=110, y=600, in_=self.window)
 
     def set_nonogram(self):
-        self.game_path = os.getcwd()
-        self.nonograms_path = self.game_path + '\\Nonograms'
         self.my_filetypes = [('Nonogramy', '.npy')]
         self.answer = filedialog.askopenfilename(parent=self.window,
-                                            initialdir=self.nonograms_path,
+                                            initialdir=os.getcwd() + '\\Nonograms',
                                             title="Please select a file:",
                                             filetypes=self.my_filetypes)
         self.nonogram = np.load(self.answer)
@@ -213,6 +211,9 @@ class Nonogram():
         for i in range(size_of_nonogram + 1):
             self.canvas.create_line(0, i * size_of_grid, size_of_board, i * size_of_grid, width = 2)
 
+        self.canvas.create_text(size_of_board / 2, size_of_board + 100,
+                                text="Naciśnij enter aby wrócić do menu", font=('Comic Sans MS', 19, 'bold italic'))
+
     def click(self, event):
         if self.in_game == True:
             click_position = [event.x, event.y]
@@ -220,9 +221,10 @@ class Nonogram():
             self.win = self.check_win()
             self.initialize_nonogram()#used to keep thick lines
             if self.win == True:
-                self.canvas.create_text(size_of_outskirts / 2,size_of_outskirts / 2, text = "Wygrałeś!", font="Times 20")
-                self.canvas.create_text(size_of_outskirts / 2, size_of_outskirts / 2 + 20,
-                 text="Naciśnij enter aby kontynuować", font="Times 10")
+                self.canvas.create_text(size_of_outskirts / 2,size_of_outskirts / 2, text = "Wygrałeś!",
+                                        font=('Comic Sans MS', 19, 'bold italic'))
+                self.canvas.create_text(size_of_outskirts / 2, size_of_outskirts / 2 + 30,
+                 text="Naciśnij enter aby kontynuować", font=('Comic Sans MS', 8, 'bold italic'))
 
 
 
