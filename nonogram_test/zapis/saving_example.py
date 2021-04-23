@@ -1,4 +1,4 @@
-import Save_as_image as sv
+import nonogram_test.zapis.Save_as_image as sv
 
 p1 = sv.picture(1, [[1, 0], [1, 0]])
 
