@@ -25,14 +25,45 @@ class Nonogram():
 
         self.main_menu()
 
+    def options_menu(self):
+        self.in_options = True
+        self.in_menu = False
+
+        self.clearwin()
+        self.canvas = Canvas(self.window, width=550, height=826)
+        self.canvas.pack()
+
+        self.main_menu_image = PhotoImage(
+            file="main_menu_image.ppm")  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
+        self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
+
+        self.canvas.create_text(275, 50, text="Naciśnij dwokrotnie aby wybrać poziom", font=('Comic Sans MS', 20, 'bold italic'))
+
+        self.listbox = Listbox(self.window, width = 30, height = 30)
+        self.listbox.place(x = 175, y = 100, in_ = self.window)
+
+        self.flist = os.listdir(os.getcwd() + '\\Nonograms')
+        for item in self.flist:
+            self.listbox.insert(END, item)
+
+        self.listbox.bind('<Double-Button>', lambda x: self.options_click())
+
+    def options_click(self):
+        self. name_of_nonongram = (self.listbox.get(self.listbox.curselection()[0]))
+        self.answer = os.getcwd() + '\\Nonograms\\' + self.name_of_nonongram
+        self.nonogram = np.load(self.answer)
+        self.clearwin()
+        self.main_menu()
+
     def main_menu(self):
         self.in_menu = True
+        self.in_game = False
 
-        self.canvas = Canvas(self.window, width = 551, height = 826)
+        self.canvas = Canvas(self.window, width = 550, height = 826)
         self.canvas.pack()
 
         self.main_menu_image = PhotoImage(file="main_menu_image.ppm")#podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
-        self.image = self.canvas.create_image(551, 0, anchor=NE, image=self.main_menu_image)
+        self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
         self.canvas.create_text(275, 80, text = "Nongram game", font = ('Comic Sans MS', 50, 'bold italic'))
 
@@ -44,8 +75,8 @@ class Nonogram():
                                    height = 1, bd = 5, font = ('Comic Sans MS', 40, 'bold italic'))
         self.option_button.place(x=110, y=400, in_=self.window)
 
-        # Na razie nie ma tu zadnej funkcji, takie samo dzialanie jak start button
-        self.sth_button = Button(self.window, command = lambda: self.start_game(self.nonogram), text = 'STH', width = 10,
+        # Alternatywna forma wybierania lvla, raczej docelowa
+        self.sth_button = Button(self.window, command = lambda: self.options_menu(), text = 'OPCJE (ALT)', width = 10,
                                    height = 1, bd = 5, font = ('Comic Sans MS', 40, 'bold italic'))
         self.sth_button.place(x=110, y=600, in_=self.window)
 
