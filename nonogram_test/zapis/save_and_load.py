@@ -1,7 +1,7 @@
-import matplotlib.pyplot as plt
 import matplotlib
 import os 
 import pickle
+from typing import List
 
 #----------------klasa obrazów---------------------------
 class picture(): 
@@ -15,7 +15,7 @@ class picture():
             self.name = name
             
 #----------------baza zapisu picture jako obrazka---------------------------
-def save_as_image(A:object):
+def save_as_image(A: object):
     
     directory = os.path.abspath('') #Ścieżka folderu
     
@@ -29,13 +29,14 @@ def save_as_image(A:object):
         print("Obraz już wcześniej został zapisany")
     
     pass
+
 #-------Pomocnicza fukcja, używana tylko w innych funkcjach-------
-def save_object(obj, filename): 
+def save_object(obj: object, filename: str): 
     with open(filename, 'wb') as output:  # Jeśli plik istnieje, to go nadpisuje, jeśli nie, to go tworzy
         pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
 
 #---Wczytuje stare dane, dodaje element, nadpisuje dane + automatycznie nadaje id---
-def save_as_file(new_pictures_matrix, new_file_name, old_file_name = 'None', new_pictures_name = 'None'): 
+def save_as_file(new_pictures_matrix: List[List[int]], new_file_name: str, old_file_name: str = 'None', new_pictures_name: str = 'None'): 
     
     if not os.path.isfile(old_file_name) or old_file_name == 'None': #Sprawdzanie czy pierwotny plik istnieje
         if new_pictures_name != 'None': #Tworzenie obiektu picture
@@ -61,7 +62,7 @@ def save_as_file(new_pictures_matrix, new_file_name, old_file_name = 'None', new
     return None
 
 #-------Funkcja do wczytywania-------
-def load_from_file(id, file_name):
+def load_from_file(id: int, file_name: str) -> object:
     
     with open(file_name, 'rb') as input: #Wczytywanie danych
         pictures = pickle.load(input)
