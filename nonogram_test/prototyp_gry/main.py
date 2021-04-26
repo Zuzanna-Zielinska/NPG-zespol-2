@@ -35,7 +35,7 @@ class Nonogram():
         self.clearwin()
 
         # Tworzenie przestrzeni oraz wypelnianie obrazkiem, dodawanie tekstu
-        self.canvas = Canvas(self.window, width=550, height=826)
+        self.canvas = Canvas(self.window, width=550, height=700)
         self.canvas.pack()
 
         self.main_menu_image = PhotoImage(
@@ -84,7 +84,7 @@ class Nonogram():
         self.in_game = False
 
         # Tworzenie przestrzeni oraz wypelnianie obrazkiem, dodawanie tekstu i przyciskow
-        self.canvas = Canvas(self.window, width = 550, height = 826)
+        self.canvas = Canvas(self.window, width = 550, height = 700)
         self.canvas.pack()
 
         self.main_menu_image = PhotoImage(file="main_menu_image.ppm")# podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
@@ -99,12 +99,12 @@ class Nonogram():
         self.start_button.place(x = 110, y = 200, in_ = self.window)
 
         # Przycisk do wyboru poziomow z poziomu eksploratora za pomoca funkcji set_nonogram
-        self.option_button = Button(self.window, command = lambda: self.set_nonogram(), text = 'OPCJE', width=10,
+        self.option_button = Button(self.window, command = lambda: self.set_nonogram(), text = 'OPCJE OLD', width=10,
                                    height = 1, bd = 5, font = ('Comic Sans MS', 40, 'bold italic'))
         self.option_button.place(x=110, y=400, in_=self.window)
 
         # Przycisk do wyboru poziomow za pomoca menu opcji
-        self.sth_button = Button(self.window, command = lambda: self.options_menu(), text = 'OPCJE (ALT)', width = 10,
+        self.sth_button = Button(self.window, command = lambda: self.options_menu(), text = 'OPCJE ACT', width = 10,
                                    height = 1, bd = 5, font = ('Comic Sans MS', 40, 'bold italic'))
         self.sth_button.place(x=110, y=600, in_=self.window)
 
