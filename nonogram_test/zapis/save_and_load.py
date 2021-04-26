@@ -64,7 +64,7 @@ def save_as_file(new_pictures_matrix: List[List[int]], new_file_name: str, old_f
     return None
 
 #-------Funkcja do wczytywania jednego obiektu z pliku wybieranego po id-------
-def load_from_file(id: int, file_name: str) -> object:
+def load_one_from_file(id: int, file_name: str) -> object:
     
     with open(file_name, 'rb') as input: #Wczytywanie danych
         pictures = pickle.load(input)
@@ -83,3 +83,30 @@ def load_list_from_file(file_name: str) -> List[object]:
         pictures = pickle.load(input)
     
     return pictures
+
+#-------Pomocnicza fukcja do kopiowania plików-------
+def copy_file(new_file_name:str, old_file_name: str):
+    
+    with open(old_file_name, 'rb') as input: #Wczytywanie danych
+        p = pickle.load(input)
+        
+    save_object(p, new_file_name) #Zapis
+    
+    pass
+
+#-------Pomocnicza fukcja do kopiowania plików-------
+def change_to_solved(id: int, file_name: str):
+    
+    with open(file_name, 'rb') as input: #Wczytywanie danych
+        pictures = pickle.load(input)
+    
+    for p in pictures: #Szukanie włściwego id i oznaczenie jako uzupełnionego
+        if p.id == id:
+            p.is_solved = True
+    
+    save_object(pictures, file_name) #Zapis
+    
+    if id >= len(pictures):
+        print("Plik o id = "+str(id)+" nie istnieje.")
+    
+    pass
