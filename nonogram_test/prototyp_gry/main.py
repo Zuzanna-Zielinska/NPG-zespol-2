@@ -2,6 +2,8 @@ from tkinter import filedialog
 from tkinter import *
 import numpy as np
 import os
+import save_and_load as sv
+
 
 # Wymiary okna gry i siatki
 size_of_nonogram = 15
@@ -14,6 +16,7 @@ size_of_font = 30
 # kolory zaznaczonych oraz odznaczonych kratek
 marked_grid_colour = '#444444'
 background_colour = '#F5F5F5'
+
 
 
 class Nonogram():
@@ -47,7 +50,7 @@ class Nonogram():
 
 
         # Wypełnianie listy plikami z folderu ./Nonograms
-        self.flist = os.listdir(os.getcwd() + '\\Nonograms')
+        self.flist = sv.id_and_name_list(sv.load_list_from_file("Obrazy.pkl"))
         for item in self.flist:
             self.listbox.insert(END, item)
 
@@ -63,13 +66,13 @@ class Nonogram():
     def options_click(self):
 
         # Nazwa pliku
-        self. name_of_nonongram = (self.listbox.get(self.listbox.curselection()[0]))
+        self.name_of_nonongram = (self.listbox.get(self.listbox.curselection()[0]))
 
         # Tworzenie sciezki do wybranego pliku
-        self.answer = os.getcwd() + '\\Nonograms\\' + self.name_of_nonongram
+        self.chosen_level = sv.load_one_from_file(self.name_of_nonongram, "Obrazy.pkl")
 
         # Zaladowanie pliku do zmiennej
-        self.nonogram = np.load(self.answer)
+        self.nonogram = self.chosen_level.matrix
 
         # Wyjscie do main menu
         self.clearwin()
@@ -111,13 +114,13 @@ class Nonogram():
         self.my_filetypes = [('Nonogramy', '.npy')]
 
         # Sciezka do wybranego pliku
-        self.answer = filedialog.askopenfilename(parent=self.window,
-                                            initialdir=os.getcwd() + '\\Nonograms',
-                                            title="Please select a file:",
-                                            filetypes=self.my_filetypes)
+        self.chosen_level = filedialog.askopenfilename(parent=self.window,
+                                                       initialdir=os.getcwd() + '\\Nonograms',
+                                                       title="Please select a file:",
+                                                       filetypes=self.my_filetypes)
 
         # Ladowanie wybranego pliku do zmiennej nonogram
-        self.nonogram = np.load(self.answer)
+        self.nonogram = np.load(self.chosen_level)
 
     # Funkcja rozpoczynajaca rozgrywke, musi dostac nonogram
     def start_game(self,nonogram):
@@ -318,6 +321,7 @@ class Nonogram():
                                         font=('Comic Sans MS', 19, 'bold italic'))
                 self.canvas.create_text(size_of_outskirts / 2, size_of_outskirts / 2 + 30,
                  text="Naciśnij enter aby kontynuować", font=('Comic Sans MS', 8, 'bold italic'))
+                sv.change_to_solved(True,self.chosen_level.id,"Obrazy.pkl")
 
 
 
