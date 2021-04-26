@@ -3,4 +3,5 @@ W razie problemów ze ścieżką należy sprawdzić czy 'working directory' jest
 (łatwo to sprawdzić poprzez kod import os; print(os.getcwd()))\
 \
 ZMIANY 26.04:\
-save_and_load - dodałem jedną funkcję na samym końcu, zmieniłem funckję zmieniającą na solved - teraz przyjmuje typ na który ma zmienić a nie zmienia automatycznie na True
+save_and_load - dodałem jedną funkcję na samym końcu, zmieniłem funckję zmieniającą na solved - teraz przyjmuje typ na który ma zmienić a nie zmienia automatycznie na True\
+main - implementacja pliku save_and_load, dostosowanie wysokości okna do monitorów o rodzielczości HD na razie bez zachowania, proporcji, elementy mogą nie mieścić się na ekranie 
