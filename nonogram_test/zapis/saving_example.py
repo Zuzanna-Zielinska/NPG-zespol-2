@@ -39,6 +39,13 @@ print(p.name)
 p = sv.load_one_from_file(10, 'Obrazy.pkl')
 print(p)
 
+print("")
+
+#----Zmiana nazwy obrazka----
+sv.rename(3, "Frotka", 'Obrazy.pkl')
+p = sv.load_one_from_file(3, 'Obrazy.pkl')
+print(p.name)
+
 print(" ")
 
 #----Ładowanie wszystkich macierzy z pliku----
@@ -56,3 +63,4 @@ print(p[1].is_solved)
 sv.change_to_solved(1 ,'Obrazy_wypełniane.pkl')
 p = sv.load_list_from_file('Obrazy_wypełniane.pkl')
 print(p[1].is_solved)
+

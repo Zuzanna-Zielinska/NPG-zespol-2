@@ -1,5 +1,6 @@
-import nonogram_test.zapis.interfejs_uzytkownika.gui_zapis as n
+import gui_zapis as n
 import numpy as np
+import save_and_load as sv
 
 
 # tutaj mozna zobaczyc jak dziala program
@@ -12,3 +13,6 @@ import numpy as np
 list_as_array = np.array(n.answer_nonogram)
 
 print(list_as_array)
+
+#Zapisywanie
+sv.save_as_file(list_as_array, 'Stworzone_z_gui.pkl', 'Stworzone_z_gui.pkl')

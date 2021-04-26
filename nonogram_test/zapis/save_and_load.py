@@ -102,7 +102,24 @@ def change_to_solved(id: int, file_name: str):
     
     for p in pictures: #Szukanie włściwego id i oznaczenie jako uzupełnionego
         if p.id == id:
-            p.is_solved = True
+            p.is_solved = True #Oznaczenie jako wypełnionego
+    
+    save_object(pictures, file_name) #Zapis
+    
+    if id >= len(pictures):
+        print("Plik o id = "+str(id)+" nie istnieje.")
+    
+    pass
+
+#-------Funkcja do zmiany nazwy obrazka, bliźniacza do change_to_solved-------
+def rename(id: int, new_name: str, file_name: str):
+    
+    with open(file_name, 'rb') as input: #Wczytywanie danych
+        pictures = pickle.load(input)
+    
+    for p in pictures: #Szukanie włściwego id
+        if p.id == id:
+            p.name = new_name #Zmiana nazwy
     
     save_object(pictures, file_name) #Zapis
     
