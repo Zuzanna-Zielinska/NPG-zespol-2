@@ -5,7 +5,7 @@ from typing import List
 
 #----------------klasa obrazów---------------------------
 class picture(): 
-    def __init__(self, id, matrix, name = None):
+    def __init__(self, id, matrix, name = None, is_solved = False):
         self.id = id #id ma być zadawanie automatycznie przez inną funkcję
         self.matrix = matrix 
         
@@ -13,6 +13,8 @@ class picture():
             self.name = id
         else:
             self.name = name
+        
+        self.is_solved = is_solved
             
 #----------------baza zapisu picture jako obrazka---------------------------
 def save_as_image(A: object):
@@ -61,7 +63,7 @@ def save_as_file(new_pictures_matrix: List[List[int]], new_file_name: str, old_f
     
     return None
 
-#-------Funkcja do wczytywania-------
+#-------Funkcja do wczytywania jednego obiektu z pliku wybieranego po id-------
 def load_from_file(id: int, file_name: str) -> object:
     
     with open(file_name, 'rb') as input: #Wczytywanie danych
@@ -73,3 +75,11 @@ def load_from_file(id: int, file_name: str) -> object:
             
     print("Plik o id = "+str(id)+" nie istnieje.")
     return None
+
+#-------Funkcja do wczytywania wszystkich obiektów z pliku-------
+def load_list_from_file(file_name: str) -> List[object]:
+    
+    with open(file_name, 'rb') as input: #Wczytywanie danych
+        pictures = pickle.load(input)
+    
+    return pictures

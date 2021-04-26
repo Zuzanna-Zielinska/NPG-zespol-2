@@ -26,15 +26,16 @@ sv.save_as_file(p1, 'Obrazy.pkl', 'Obrazy.pkl')
 
 p = sv.load_from_file(0, 'Obrazy.pkl')
 print(p.name)
-
 p = sv.load_from_file(1, 'Obrazy.pkl')
 print(p.name)
-
 p = sv.load_from_file(2, 'Obrazy.pkl')
 print(p.name)
-
 p = sv.load_from_file(3, 'Obrazy.pkl')
 print(p.name)
-
 p = sv.load_from_file(10, 'Obrazy.pkl')
 print(p)
+
+print(" ")
+
+lst = sv.load_list_from_file('Obrazy.pkl')
+print(lst[0].name)
