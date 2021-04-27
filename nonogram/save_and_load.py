@@ -68,15 +68,20 @@ def save_as_file(new_pictures_matrix: List[List[int]], new_file_name: str, old_f
 
 
 # -------Funkcja do wczytywania jednego obiektu z pliku wybieranego po id-------
-def load_one_from_file(id: int, file_name: str) -> object:
+def load_one_from_file(tag, file_name: str) -> object:
     with open(file_name, 'rb') as input:  # Wczytywanie danych
         pictures = pickle.load(input)
-
-    for p in pictures:  # Szukanie włściwego id
-        if p.id == id:
-            return p
-
-    print("Plik o id = " + str(id) + " nie istnieje.")
+        
+    if type(tag) == int: #tag = id
+        for p in pictures:  # Szukanie włściwego id
+            if p.id == tag:
+                return p
+    elif type(tag) == str: #tag = nazwa
+        for p in pictures:  # Szukanie włściwej nazwy
+            if p.name == tag:
+                return p
+    
+    print("Plik o podanym id lub nazwie nie istnieje.")
     return None
 
 
