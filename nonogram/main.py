@@ -6,12 +6,7 @@ import save_and_load as sv
 
 
 # Wymiary okna gry i siatki
-size_of_nonogram = 15
-size_of_grid = 30
-size_of_board = size_of_nonogram*size_of_grid
-size_of_canvas = 700
-size_of_outskirts = 6 * size_of_grid
-size_of_font = 30
+
 
 # kolory zaznaczonych oraz odznaczonych kratek
 marked_grid_colour = '#444444'
@@ -26,7 +21,13 @@ class Nonogram():
         self.window.title('Nonogram')
 
         self.main_menu()
-
+    def define_sizes(self,nonogram):
+        self.size_of_nonogram = len(nonogram[0])
+        self.size_of_grid = 30
+        self.size_of_board = self.size_of_nonogram * self.size_of_grid
+        self.size_of_canvas = 700
+        self.size_of_outskirts = 6 * self.size_of_grid
+        self.size_of_font = 30
     # Funckja obslugujaca menu opcji
     def options_menu(self):
         self.in_options = True
@@ -50,7 +51,7 @@ class Nonogram():
 
 
         # Wypełnianie listy plikami z folderu ./Nonograms
-        self.flist = sv.id_and_name_list(sv.load_list_from_file('Stworzone_z_gui.pkl'))
+        self.flist = sv.id_and_name_list(sv.load_list_from_file("Obrazy.pkl"))
         for item in self.flist:
             self.listbox.insert(END, item)
 
@@ -69,7 +70,7 @@ class Nonogram():
         self.name_of_nonongram = (self.listbox.get(self.listbox.curselection()[0]))
 
         # Tworzenie sciezki do wybranego pliku
-        self.chosen_level = sv.load_one_from_file(self.name_of_nonongram, 'Stworzone_z_gui.pkl')
+        self.chosen_level = sv.load_one_from_file(self.name_of_nonongram, "Obrazy.pkl")
 
         # Zaladowanie pliku do zmiennej
         self.nonogram = self.chosen_level.matrix
@@ -127,14 +128,16 @@ class Nonogram():
         self.in_menu = False
         self.in_game = True
 
+        self.define_sizes(nonogram)
+
         #nonogram ktory bedzie wypelniany przez gracza
-        self.answer_nonogram = np.zeros((size_of_nonogram, size_of_nonogram), dtype=int)
+        self.answer_nonogram = np.zeros((self.size_of_nonogram, self.size_of_nonogram), dtype=int)
 
         # Czyszczenie okna z elementow main menu
         self.clearwin()
 
         # Tworzenie okna rozgrywki
-        self.canvas = Canvas(self.window, width=size_of_canvas, height=size_of_canvas, background=background_colour)
+        self.canvas = Canvas(self.window, width=self.size_of_canvas, height=self.size_of_canvas, background=background_colour)
         self.canvas.pack()
 
         # Mozliwe interakcje od gracza
@@ -161,13 +164,13 @@ class Nonogram():
 
     # Funkcja rysuje siatke nonogramu
     def initialize_nonogram(self):
-        for i in range(size_of_nonogram + 1):
-            self.canvas.create_line(i * size_of_grid + size_of_outskirts, 0, i * size_of_grid + size_of_outskirts,
-                                    size_of_board + size_of_outskirts, width = 2)
+        for i in range(self.size_of_nonogram + 1):
+            self.canvas.create_line(i * self.size_of_grid + self.size_of_outskirts, 0, i * self.size_of_grid + self.size_of_outskirts,
+                                    self.size_of_board + self.size_of_outskirts, width = 2)
 
-        for i in range(size_of_nonogram + 1):
-            self.canvas.create_line(0, i * size_of_grid + size_of_outskirts, size_of_board + size_of_outskirts,
-                                    i * size_of_grid + size_of_outskirts, width = 2)
+        for i in range(self.size_of_nonogram + 1):
+            self.canvas.create_line(0, i * self.size_of_grid + self.size_of_outskirts, self.size_of_board + self.size_of_outskirts,
+                                    i * self.size_of_grid + self.size_of_outskirts, width = 2)
 
 
     # Funckja wypisujaca macierz odpowiedzi
@@ -176,8 +179,8 @@ class Nonogram():
         ones_counter = 0
         columns = list(zip(*nonogram))
         array = []
-        for i in range(size_of_nonogram):
-            for j in range(size_of_nonogram):
+        for i in range(self.size_of_nonogram):
+            for j in range(self.size_of_nonogram):
                 if not ones_counter - 1 == 0 and ones_counter > 0:
                     ones_counter -= 1
                     continue
@@ -185,7 +188,7 @@ class Nonogram():
                 first_one = columns[i][j]
                 if first_one == 1:
                     ones_counter = 1
-                    for z in range(j+1,size_of_nonogram):
+                    for z in range(j+1,self.size_of_nonogram):
                         if columns[i][z] == 0:
                             break
                         else:
@@ -194,15 +197,15 @@ class Nonogram():
                     array.append(ones_counter)
             if not array == []:
                 for j in range(len(array)):
-                    self.canvas.create_text(size_of_outskirts+size_of_grid / 2 + size_of_grid * i,
-                                            (j + 1) * size_of_font,font="Times 20",text = str(array[j]))
+                    self.canvas.create_text(self.size_of_outskirts+self.size_of_grid / 2 + self.size_of_grid * i,
+                                            (j + 1) * self.size_of_font,font="Times 20",text = str(array[j]))
             array.clear()
         #rows
         ones_counter = 0
         rows = nonogram
         array = []
-        for i in range(size_of_nonogram):
-            for j in range(size_of_nonogram):
+        for i in range(self.size_of_nonogram):
+            for j in range(self.size_of_nonogram):
                 if not ones_counter - 1 == 0 and ones_counter > 0:
                     ones_counter -= 1
                     continue
@@ -210,7 +213,7 @@ class Nonogram():
                 first_one = rows[i][j]
                 if first_one == 1:
                     ones_counter = 1
-                    for z in range(j + 1, size_of_nonogram):
+                    for z in range(j + 1, self.size_of_nonogram):
                         if rows[i][z] == 0:
                             break
                         else:
@@ -219,34 +222,35 @@ class Nonogram():
                     array.append(ones_counter)
             if not array == []:
                 for j in range(len(array)):
-                    self.canvas.create_text((j + 1) * size_of_font,size_of_outskirts + size_of_grid / 2 + size_of_grid * i,
+                    self.canvas.create_text((j + 1) * self.size_of_font,
+                                            self.size_of_outskirts + self.size_of_grid / 2 + self.size_of_grid * i,
                                             font="Times 20", text=str(array[j]))
             array.clear()
     # Funkcja zmieniajaca kolor kratki siatki oraz zmieniajaca macierz odpowiedzi
     def change_grid_status(self, click_position):
 
         #treating left upper corner like coords 0,0
-        click_position[0]-=size_of_outskirts
-        click_position[1]-=size_of_outskirts
+        click_position[0]-=self.size_of_outskirts
+        click_position[1]-=self.size_of_outskirts
 
         # Check if the click was outside board
         if click_position[0] < 0 or click_position[1] < 0:
             return
-        if click_position[0] > size_of_board or click_position[1] > size_of_board:
+        if click_position[0] > self.size_of_board or click_position[1] > self.size_of_board:
             return
 
         # Wyznaczenie, w ktorej kratce mialo miejsce klikniecie
-        for i in range(size_of_nonogram + 1):
-            if click_position[0] <= i * size_of_grid and click_position[0] >= (i - 1) * size_of_grid:
+        for i in range(self.size_of_nonogram + 1):
+            if click_position[0] <= i * self.size_of_grid and click_position[0] >= (i - 1) * self.size_of_grid:
                 # x coords of left upper corner of clicked square
-                x_position = (i - 1) * size_of_grid + size_of_outskirts
+                x_position = (i - 1) * self.size_of_grid + self.size_of_outskirts
                 # column containing clicked square
                 col = i - 1
                 break
-        for i in range(size_of_nonogram + 1):
-            if click_position[1] <= i * size_of_grid and click_position[1] >= (i - 1) * size_of_grid:
+        for i in range(self.size_of_nonogram + 1):
+            if click_position[1] <= i * self.size_of_grid and click_position[1] >= (i - 1) * self.size_of_grid:
                 # y coords of left upper corner of clicked square
-                y_position = (i - 1) * size_of_grid + size_of_outskirts
+                y_position = (i - 1) * self.size_of_grid + self.size_of_outskirts
                 # row containing clicked square
                 row = i - 1
                 break
@@ -254,10 +258,10 @@ class Nonogram():
         # Zmiana macierzy odpowiedzi
         if self.answer_nonogram[row][col] == 0:
             self.answer_nonogram[row][col] = 1
-            self.canvas.create_rectangle(x_position, y_position, x_position + size_of_grid, y_position + size_of_grid, fill = marked_grid_colour)
+            self.canvas.create_rectangle(x_position, y_position, x_position + self.size_of_grid, y_position + self.size_of_grid, fill = marked_grid_colour)
         else:
             self.answer_nonogram[row][col] = 0
-            self.canvas.create_rectangle(x_position,y_position,x_position + size_of_grid,y_position + size_of_grid, fill = background_colour)
+            self.canvas.create_rectangle(x_position,y_position,x_position + self.size_of_grid,y_position + self.size_of_grid, fill = background_colour)
 
     # Funkcja sprawdzajaca czy macierz odpowiedzi jest identyczna z nonogramem
     def check_win(self):
@@ -287,20 +291,21 @@ class Nonogram():
     # Funkcja rysujaca wypelniony nonogram
     def print_nonogram(self):
         # Rysowanie wypelnionych pol
-        for i in range(size_of_nonogram):
-            for j in range(size_of_nonogram):
+        for i in range(self.size_of_nonogram):
+            for j in range(self.size_of_nonogram):
                 if self.nonogram[i][j] == 1:
-                    self.canvas.create_rectangle(j * size_of_nonogram * 2, i * size_of_nonogram * 2, (j + 1) * size_of_nonogram * 2,
-                                                 (i + 1) * size_of_nonogram * 2, fill=marked_grid_colour)
+                    self.canvas.create_rectangle(j * self.size_of_grid, i * self.size_of_grid,
+                                                 (j + 1) * self.size_of_grid,
+                                                 (i + 1) * self.size_of_grid, fill=marked_grid_colour)
 
         # Rysowanie siatki oraz wypisywanie tekstu
-        for i in range(size_of_nonogram + 1):
-            self.canvas.create_line(i * size_of_grid, 0, i * size_of_grid, size_of_board, width = 2)
+        for i in range(self.size_of_nonogram + 1):
+            self.canvas.create_line(i * self.size_of_grid, 0, i * self.size_of_grid, self.size_of_board, width = 2)
 
-        for i in range(size_of_nonogram + 1):
-            self.canvas.create_line(0, i * size_of_grid, size_of_board, i * size_of_grid, width = 2)
+        for i in range(self.size_of_nonogram + 1):
+            self.canvas.create_line(0, i * self.size_of_grid, self.size_of_board, i * self.size_of_grid, width = 2)
 
-        self.canvas.create_text(size_of_board / 2, size_of_board + 100,
+        self.canvas.create_text(self.size_of_board / 2, self.size_of_board + 100,
                                 text="Naciśnij enter aby wrócić do menu", font=('Comic Sans MS', 19, 'bold italic'))
 
     # Funkcja obslugujaca klinkniecie gracza w trakcie rozgrywki
@@ -317,11 +322,11 @@ class Nonogram():
 
             # Czynnosci podjete w wypadku wygranej
             if self.win == True:
-                self.canvas.create_text(size_of_outskirts / 2,size_of_outskirts / 2, text = "Wygrałeś!",
+                self.canvas.create_text(self.size_of_outskirts / 2,self.size_of_outskirts / 2, text = "Wygrałeś!",
                                         font=('Comic Sans MS', 19, 'bold italic'))
-                self.canvas.create_text(size_of_outskirts / 2, size_of_outskirts / 2 + 30,
+                self.canvas.create_text(self.size_of_outskirts / 2, self.size_of_outskirts / 2 + 30,
                  text="Naciśnij enter aby kontynuować", font=('Comic Sans MS', 8, 'bold italic'))
-                sv.change_to_solved(True,self.chosen_level.id,'Stworzone_z_gui.pkl')
+                sv.change_to_solved(True,self.chosen_level.id,"Obrazy.pkl")
 
 
 
