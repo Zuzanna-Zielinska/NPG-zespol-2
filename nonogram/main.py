@@ -51,7 +51,7 @@ class Nonogram():
 
 
         # Wypełnianie listy plikami z folderu ./Nonograms
-        self.flist = sv.id_and_name_list(sv.load_list_from_file("Obrazy.pkl"))
+        self.flist = sv.id_and_name_list(sv.load_list_from_file("Stworzone_z_gui.pkl"))
         for item in self.flist:
             self.listbox.insert(END, item)
 
@@ -70,7 +70,7 @@ class Nonogram():
         self.name_of_nonongram = (self.listbox.get(self.listbox.curselection()[0]))
 
         # Tworzenie sciezki do wybranego pliku
-        self.chosen_level = sv.load_one_from_file(self.name_of_nonongram, "Obrazy.pkl")
+        self.chosen_level = sv.load_one_from_file(self.name_of_nonongram, "Stworzone_z_gui.pkl")
 
         # Zaladowanie pliku do zmiennej
         self.nonogram = self.chosen_level.matrix
@@ -326,7 +326,7 @@ class Nonogram():
                                         font=('Comic Sans MS', 19, 'bold italic'))
                 self.canvas.create_text(self.size_of_outskirts / 2, self.size_of_outskirts / 2 + 30,
                  text="Naciśnij enter aby kontynuować", font=('Comic Sans MS', 8, 'bold italic'))
-                sv.change_to_solved(True,self.chosen_level.id,"Obrazy.pkl")
+                sv.change_to_solved(True,self.chosen_level.id,"Stworzone_z_gui.pkl")
 
 
 
