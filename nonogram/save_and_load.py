@@ -135,6 +135,7 @@ def rename(id: int, new_name: str, file_name: str):
         print("Plik o id = " + str(id) + " nie istnieje.")
 
     pass
+
 # Funkcja tworzaca liste posaidajaca id albo nazwe wszytskich nonogramow w zaleznosci od tego czy byly rozwiazane
 def id_and_name_list(list):
     result_list = []
@@ -144,3 +145,15 @@ def id_and_name_list(list):
         else:
             result_list.append(item.id)
     return result_list
+
+# -------Funkcja do oznaczenia wszystkich obrazów jako nierozwiązane => reset zapisu gry-------
+def change_all_to_unsolved(file_name: str):
+    
+    with open(file_name, 'rb') as input: #Wczytywanie danych
+        pictures = pickle.load(input)
+        
+    for p in pictures: 
+        p.is_solved = False
+    save_object(pictures, file_name)  # Zapis
+        
+    pass
