@@ -11,7 +11,7 @@ import save_and_load as sv
 # kolory zaznaczonych oraz odznaczonych kratek
 marked_grid_colour = '#444444'
 background_colour = '#F5F5F5'
-
+X_colour = '#db2918'
 
 
 class Nonogram():
@@ -133,6 +133,9 @@ class Nonogram():
         #nonogram ktory bedzie wypelniany przez gracza
         self.answer_nonogram = np.zeros((self.size_of_nonogram, self.size_of_nonogram), dtype=int)
 
+        #nonogram wypelniany przez gracza bez znakow x
+        self.check_win_nonogram = np.zeros((self.size_of_nonogram, self.size_of_nonogram), dtype=int)
+
         # Czyszczenie okna z elementow main menu
         self.clearwin()
 
@@ -143,6 +146,9 @@ class Nonogram():
         # Mozliwe interakcje od gracza
         #LPM
         self.window.bind('<Button-1>', self.click)
+
+        # Wstawianie x
+        self.window.bind('<Button-3>', self.click_x)
 
         # Enter
         self.window.bind('<Return>', self.end_game)
@@ -227,7 +233,7 @@ class Nonogram():
                                             font="Times 20", text=str(array[j]))
             array.clear()
     # Funkcja zmieniajaca kolor kratki siatki oraz zmieniajaca macierz odpowiedzi
-    def change_grid_status(self, click_position):
+    def change_grid_status(self, click_position, x_clicked = False):
 
         #treating left upper corner like coords 0,0
         click_position[0]-=self.size_of_outskirts
@@ -238,6 +244,8 @@ class Nonogram():
             return
         if click_position[0] > self.size_of_board or click_position[1] > self.size_of_board:
             return
+
+
 
         # Wyznaczenie, w ktorej kratce mialo miejsce klikniecie
         for i in range(self.size_of_nonogram + 1):
@@ -255,17 +263,38 @@ class Nonogram():
                 row = i - 1
                 break
 
+        # kliknieto prawy przycisk (x), Zmiana macierzy odpowiedzi i wypelnienie komórki
+        if x_clicked:
+            if self.answer_nonogram[row][col] == 0:
+                self.answer_nonogram[row][col] = 2
+                self.canvas.create_line(x_position + 3, y_position + 3, x_position + self.size_of_grid - 3,
+                                        y_position + self.size_of_grid - 3, width=4, fill=X_colour)
+                self.canvas.create_line(x_position + self.size_of_grid - 3, y_position + 3, x_position + 3,
+                                        y_position + self.size_of_grid - 3, width=4, fill=X_colour)
+                return
+            elif self.answer_nonogram[row][col] == 2:
+                self.answer_nonogram[row][col] = 0
+                self.canvas.create_rectangle(x_position, y_position, x_position + self.size_of_grid,
+                                             y_position + self.size_of_grid, fill=background_colour)
+                return
+            else:
+                return
+
         # Zmiana macierzy odpowiedzi
         if self.answer_nonogram[row][col] == 0:
             self.answer_nonogram[row][col] = 1
+            self.check_win_nonogram[row][col] = 1
             self.canvas.create_rectangle(x_position, y_position, x_position + self.size_of_grid, y_position + self.size_of_grid, fill = marked_grid_colour)
+        elif self.answer_nonogram[row][col] == 2:
+            return
         else:
             self.answer_nonogram[row][col] = 0
+            self.check_win_nonogram[row][col] = 0
             self.canvas.create_rectangle(x_position,y_position,x_position + self.size_of_grid,y_position + self.size_of_grid, fill = background_colour)
 
     # Funkcja sprawdzajaca czy macierz odpowiedzi jest identyczna z nonogramem
     def check_win(self):
-        if (self.nonogram == self.answer_nonogram).all():
+        if (self.nonogram == self.check_win_nonogram).all():
             return True
 
         return False
@@ -327,6 +356,15 @@ class Nonogram():
                 self.canvas.create_text(self.size_of_outskirts / 2, self.size_of_outskirts / 2 + 30,
                  text="Naciśnij enter aby kontynuować", font=('Comic Sans MS', 8, 'bold italic'))
                 sv.change_to_solved(True,self.chosen_level.id,"Stworzone_z_gui.pkl")
+
+    def click_x(self, event):
+        if self.in_game == True:
+            # informacaj, ze kliknieto x
+            x_clicked = True
+            # coords of click
+            click_position = [event.x, event.y]
+            # Rysowanie X
+            self.change_grid_status(click_position, x_clicked)
 
 
 
