@@ -28,8 +28,8 @@ class Nonogram():
         self.size_of_canvas = 700
         self.size_of_outskirts = 6 * self.size_of_grid
         self.size_of_font = 30
-    # Funckja obslugujaca menu opcji
-    def options_menu(self):
+    # Funckja obslugujaca menu wyboru poziomu
+    def choose_level_menu(self):
         self.in_options = True
         self.in_menu = False
 
@@ -55,16 +55,21 @@ class Nonogram():
         for item in self.flist:
             self.listbox.insert(END, item)
 
-        # Przycisk do wybrania, po nacisnieciu przekazuje wybrany nonogram do zmiennej i wraca do main menu
-        self.button_options_menu = Button(self.window, command = lambda: self.options_click(), text = "Wybierz",
+        # Przycisk do wybrania, po nacisnieciu przekazuje wybrany nonogram do zmiennej i zaczyna gre
+        self.button_options_menu = Button(self.window, command = lambda: self.choose_level_menu_click(), text ="Wybierz",
                                           font = ('Comic Sans MS', 15, 'bold italic'))
         self.button_options_menu.place(x = 220, y = 600, in_ = self.window)
 
+        # Przycisk wracajacy do menu
+        self.return_to_menu = Button(self.window, command=lambda: self.back_to_menu(), text="Powrot do menu",
+                                     width=20, height=1, bd=5, font=('Comic Sans MS', 10, 'bold italic'))
+        self.return_to_menu.place(x=180, y=660, in_=self.window)
+
         # Druga, alternatywna opcja wyboru
-        self.listbox.bind('<Double-Button>', lambda x: self.options_click())
+        self.listbox.bind('<Double-Button>', lambda x: self.choose_level_menu_click())
 
     # Funckja przekazuje wybrany nonogram do zmiennej i wraca do main menu
-    def options_click(self):
+    def choose_level_menu_click(self):
 
         # Nazwa pliku
         self.name_of_nonongram = (self.listbox.get(self.listbox.curselection()[0]))
@@ -75,9 +80,11 @@ class Nonogram():
         # Zaladowanie pliku do zmiennej
         self.nonogram = self.chosen_level.matrix
 
-        # Wyjscie do main menu
-        self.clearwin()
-        self.main_menu()
+        self.start_game(self.nonogram)
+
+        # Wyjscie do main menu stare
+        #self.clearwin()
+        #self.main_menu()
 
     # Funkcja obslugujaca main menu
     def main_menu(self):
@@ -94,20 +101,62 @@ class Nonogram():
         self.canvas.create_text(275, 80, text = "Nongram game", font = ('Comic Sans MS', 50, 'bold italic'))
 
         # Definiowanie i dodawanie przyciskow
-        # Przycisk startujacy
-        self.start_button = Button(self.window, command = lambda: self.start_game(self.nonogram), text = 'START', width = 10,
-                                   height = 1, bd = 5, font = ('Comic Sans MS', 40, 'bold italic'))
-        self.start_button.place(x = 110, y = 200, in_ = self.window)
+        # Przycisk do wyjscia (niegotowy)
+        self.exit_button = Button(self.window, command = lambda: self.window.destroy(), text = 'WYJSCIE', width = 10,
+                                   height = 1, bd = 5, font = ('Comic Sans MS', 35, 'bold italic'))
+        self.exit_button.place(x = 120, y = 570, in_ = self.window)
 
-        # Przycisk do wyboru poziomow z poziomu eksploratora za pomoca funkcji set_nonogram
-        self.option_button = Button(self.window, command = lambda: self.set_nonogram(), text = 'OPCJE OLD', width=10,
-                                   height = 1, bd = 5, font = ('Comic Sans MS', 40, 'bold italic'))
-        self.option_button.place(x=110, y=400, in_=self.window)
+        # Przycisk do wejscia do opcji (niegotowy)
+        self.option_button = Button(self.window, command = lambda: self.options_menu(), text = 'OPCJE', width=10,
+                                   height = 1, bd = 5, font = ('Comic Sans MS', 35, 'bold italic'))
+        self.option_button.place(x=120, y=370, in_=self.window)
 
-        # Przycisk do wyboru poziomow za pomoca menu opcji
-        self.sth_button = Button(self.window, command = lambda: self.options_menu(), text = 'OPCJE ACT', width = 10,
-                                   height = 1, bd = 5, font = ('Comic Sans MS', 40, 'bold italic'))
-        self.sth_button.place(x=110, y=600, in_=self.window)
+        # Przycisk do startu gry
+        self.start_button = Button(self.window, command = lambda: self.choose_level_menu(), text ='GRAJ', width = 10,
+                                   height = 1, bd = 5, font = ('Comic Sans MS', 35, 'bold italic'))
+        self.start_button.place(x=120, y=170, in_=self.window)
+
+        # Przycisk do wyboru poziomow z poziomu eksploratora za pomoca funkcji set_nonogram DEBUG
+
+        self.debug_button = Button(self.window, command=lambda: self.set_nonogram(), text='DEBUG', width=10,
+                                    height=1, bd=5, font=('Comic Sans MS', 10, 'bold italic'))
+        self.debug_button.place(x=10, y=10, in_=self.window)
+
+        # Przycisk startujacy w trybie DEBUG
+        self.start_button = Button(self.window, command=lambda: self.start_game(self.nonogram), text='DEBUG_START', width=12,
+                                   height=1, bd=5, font=('Comic Sans MS', 10, 'bold italic'))
+        self.start_button.place(x=120, y=10, in_=self.window)
+
+    # Funkcja obslugujaca menu opcji
+    def options_menu(self):
+        self.in_options = True
+        self.in_menu = False
+
+        self.clearwin()
+
+        # Tworzenie przestrzeni oraz wypelnianie obrazkiem, dodawanie tekstu
+        self.canvas = Canvas(self.window, width=550, height=700)
+        self.canvas.pack()
+
+        self.main_menu_image = PhotoImage(
+            file="main_menu_image.ppm")  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
+        self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
+
+        self.canvas.create_text(275, 50, text="OPCJE", font=('Comic Sans MS', 30, 'bold italic'))
+
+        self.reset_button = Button(self.window, command = lambda: sv.change_all_to_unsolved("stworzone_z_gui.pkl"),
+                                   text = 'Resetuj postepy', width = 20, height = 1, bd = 5,
+                                   font=('Comic Sans MS', 20, 'bold italic'))
+        self.reset_button.place(x=100, y=200, in_=self.window)
+
+        self.return_to_menu = Button(self.window, command = lambda: self.back_to_menu(), text='Powrot',
+                                     width=20, height=1, bd=5, font=('Comic Sans MS', 20, 'bold italic'))
+        self.return_to_menu.place(x=100, y=600, in_=self.window)
+
+    # Funckja wracajaca do menu
+    def back_to_menu(self):
+        self.clearwin()
+        self.main_menu()
 
     # Funkcja umozliwiajaca wybor poziomow z poziomu ekploratora
     def set_nonogram(self):
@@ -367,6 +416,7 @@ class Nonogram():
             self.change_grid_status(click_position, x_clicked)
 
             self.initialize_nonogram()  # used to keep thick lines
+
 
 
 
