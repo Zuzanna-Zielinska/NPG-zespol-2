@@ -366,6 +366,7 @@ class Nonogram():
             # Rysowanie X
             self.change_grid_status(click_position, x_clicked)
 
+            self.initialize_nonogram()  # used to keep thick lines
 
 
 
