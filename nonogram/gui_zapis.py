@@ -1,5 +1,6 @@
 from tkinter import *
 import numpy as np
+import save_and_load as sv
 
 size_of_nonogram = 15
 size_of_grid = 30
@@ -7,7 +8,6 @@ size_of_board = size_of_nonogram*size_of_grid
 size_of_canvas = 700
 size_of_outskirts = 6 * size_of_grid
 size_of_font = 30
-
 
 answer_nonogram = np.zeros((size_of_nonogram,size_of_nonogram),dtype=int)
 marked_grid_colour = '#444444'
@@ -28,9 +28,6 @@ class Nonogram():
 
 
         self.initialize_nonogram()
-
-
-
 
     # Tkinter event loop
     def mainloop(self):
@@ -85,6 +82,9 @@ class Nonogram():
 
     def end_game(self):
         print("win")
+        sv.save_as_file(answer_nonogram, 'Stworzone_z_gui.pkl', 'Stworzone_z_gui.pkl')
+        name_picture = text_box()
+        name_picture.mainloop()
         self.window.destroy()
 
 
@@ -94,7 +94,19 @@ class Nonogram():
 
         self.initialize_nonogram()  # used to keep thick lines
 
+class text_box(Tk):
+    def __init__(self):
+        Tk.__init__(self)
+        self.entry = Entry(self)
+        self.button = Button(self, text="Zapisz i wyjdź", command=self.on_button)
+        self.button.pack()
+        self.entry.pack()
 
+    def on_button(self):
+        l = sv.load_list_from_file('Stworzone_z_gui.pkl')
+        n = len(l)
+        sv.rename(n-1, self.entry.get(), 'Stworzone_z_gui.pkl')
+        self.destroy()
 
 
 
