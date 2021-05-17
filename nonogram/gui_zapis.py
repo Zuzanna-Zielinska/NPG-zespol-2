@@ -1,3 +1,10 @@
+#-----------------Instrukcje-----------------
+#1. Po wprowadzeniu obrazka naciśnij "Zapisz".
+#2. W wyskakującym oknie wpisz tytuł obrazka.
+#3. Nacinij "Zapisz i wyjdź".
+#4.Zamknij pierwsze okno za pomocą przycisku "X".
+#WAŻNE! Jeli naciniesz "Zapisz" kilka razy, obrazek też zapisze się kilka razy.
+
 from tkinter import *
 import numpy as np
 import save_and_load as sv
@@ -44,7 +51,7 @@ class Nonogram():
     # Printing end_button
     def end_button(self):
 
-        button1 = Button(self.window, text="END", command=(lambda: self.end_game()))  # lambda dodana, bo jak przekazuje tylko funkcje to przycisk automatycznie się odpala
+        button1 = Button(self.window, text="Zapisz", command=(lambda: self.end_game()))  # lambda dodana, bo jak przekazuje tylko funkcje to przycisk automatycznie się odpala
         button1.pack()
 
     def change_grid_status(self, click_position):
