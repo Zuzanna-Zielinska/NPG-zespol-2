@@ -1,10 +1,3 @@
-#-----------------Instrukcje-----------------
-#1. Po wprowadzeniu obrazka naciśnij "Zapisz".
-#2. W wyskakującym oknie wpisz tytuł obrazka.
-#3. Nacinij "Zapisz i wyjdź".
-#4.Zamknij pierwsze okno za pomocą przycisku "X".
-#WAŻNE! Jeli naciniesz "Zapisz" kilka razy, obrazek też zapisze się kilka razy.
-
 from tkinter import *
 import numpy as np
 import save_and_load as sv
@@ -32,7 +25,8 @@ class Nonogram():
         self.end_button()
         # Input from user in form of clicks
         self.window.bind('<Button-1>', self.click)
-
+        self.name = Entry()
+        self.name.pack()
 
         self.initialize_nonogram()
 
@@ -88,10 +82,8 @@ class Nonogram():
             self.canvas.create_rectangle(x_position,y_position,x_position + size_of_grid,y_position + size_of_grid, fill = background_colour)
 
     def end_game(self):
-        print("win")
-        sv.save_as_file(answer_nonogram, 'Stworzone_z_gui.pkl', 'Stworzone_z_gui.pkl')
-        name_picture = text_box()
-        name_picture.mainloop()
+        sv.save_as_file(answer_nonogram, 'Stworzone_z_gui.pkl', 'Stworzone_z_gui.pkl', self.name.get())
+        
         self.window.destroy()
 
 
@@ -100,22 +92,6 @@ class Nonogram():
         self.change_grid_status(click_position)
 
         self.initialize_nonogram()  # used to keep thick lines
-
-class text_box(Tk):
-    def __init__(self):
-        Tk.__init__(self)
-        self.entry = Entry(self)
-        self.button = Button(self, text="Zapisz i wyjdź", command=self.on_button)
-        self.button.pack()
-        self.entry.pack()
-
-    def on_button(self):
-        l = sv.load_list_from_file('Stworzone_z_gui.pkl')
-        n = len(l)
-        sv.rename(n-1, self.entry.get(), 'Stworzone_z_gui.pkl')
-        self.destroy()
-
-
 
 game_instance = Nonogram()
 game_instance.mainloop()
