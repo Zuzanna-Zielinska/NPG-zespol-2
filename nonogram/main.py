@@ -20,7 +20,14 @@ class Nonogram():
         self.window = Tk()
         self.window.title('Nonogram')
 
+        self.graphic_theme = "rose.ppm"
+        self.theme_dictionary = {"Kot patrzący w dal" : "cat_and_window.ppm",
+                                 "Miasto w nocy" : "town.ppm",
+                                 "Róża" : "rose.ppm"}
+
         self.main_menu()
+
+
     def define_sizes(self,nonogram):
         self.size_of_nonogram = len(nonogram[0])
         self.size_of_grid = 30
@@ -28,6 +35,43 @@ class Nonogram():
         self.size_of_canvas = 700
         self.size_of_outskirts = 6 * self.size_of_grid
         self.size_of_font = 30
+
+    def chose_theme(self):
+        self.in_menu = False
+
+        self.clearwin()
+
+        # Tworzenie przestrzeni oraz wypelnianie obrazkiem, dodawanie tekstu
+        self.canvas = Canvas(self.window, width=550, height=840)
+        self.canvas.pack()
+
+        self.main_menu_image = PhotoImage(
+            file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
+        self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
+
+        self.canvas.create_text(275, 50, text="Wybór tła", font=('Comic Sans MS', 20, 'bold italic'))
+
+        # Tworzenie listy
+        self.listbox = Listbox(self.window, width=30, height=30)
+        self.listbox.place(x=175, y=100, in_=self.window)
+
+        self.listbox.insert(END, "Kot patrzący w dal")
+        self.listbox.insert(END, "Miasto w nocy")
+        self.listbox.insert(END, "Róża")
+
+        # Przycisk do wybrania, po nacisnieciu przekazuje wybrany nonogram do zmiennej i zaczyna gre
+        self.button_options_menu = Button(self.window, command=lambda: self.choose_theme_menu_click(), text="Wybierz",
+                                          font=('Comic Sans MS', 15, 'bold italic'))
+        self.button_options_menu.place(x=220, y=600, in_=self.window)
+
+        # Przycisk wracajacy do menu
+        self.return_to_menu = Button(self.window, command=lambda: self.back_to_menu(), text="Powrot do menu",
+                                     width=20, height=1, bd=5, font=('Comic Sans MS', 10, 'bold italic'))
+        self.return_to_menu.place(x=180, y=660, in_=self.window)
+
+        # Druga, alternatywna opcja wyboru
+        self.listbox.bind('<Double-Button>', lambda x: self.choose_theme_menu_click())
+
     # Funckja obslugujaca menu wyboru poziomu
     def choose_level_menu(self):
         self.in_options = True
@@ -36,11 +80,11 @@ class Nonogram():
         self.clearwin()
 
         # Tworzenie przestrzeni oraz wypelnianie obrazkiem, dodawanie tekstu
-        self.canvas = Canvas(self.window, width=550, height=700)
+        self.canvas = Canvas(self.window, width=550, height=840)
         self.canvas.pack()
 
         self.main_menu_image = PhotoImage(
-            file="main_menu_image.ppm")  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
+            file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
         self.canvas.create_text(275, 50, text="Wybór poziomu", font=('Comic Sans MS', 20, 'bold italic'))
@@ -50,7 +94,7 @@ class Nonogram():
         self.listbox.place(x = 175, y = 100, in_ = self.window)
 
 
-        # Wypełnianie listy plikami z folderu ./Nonograms
+        # Wypełnianie listy nonogrami z stoworze_z_gui.pkl
         self.flist = sv.id_and_name_list(sv.load_list_from_file("Stworzone_z_gui.pkl"))
         for item in self.flist:
             self.listbox.insert(END, item)
@@ -85,6 +129,14 @@ class Nonogram():
         # Wyjscie do main menu stare
         #self.clearwin()
         #self.main_menu()
+    def choose_theme_menu_click(self):
+
+
+        # Nazwa pliku
+        self.chosen_theme = (self.listbox.get(self.listbox.curselection()))
+        self.graphic_theme = self.theme_dictionary[self.chosen_theme]
+
+        self.back_to_menu()
 
     # Funkcja obslugujaca main menu
     def main_menu(self):
@@ -92,10 +144,10 @@ class Nonogram():
         self.in_game = False
 
         # Tworzenie przestrzeni oraz wypelnianie obrazkiem, dodawanie tekstu i przyciskow
-        self.canvas = Canvas(self.window, width = 550, height = 700)
+        self.canvas = Canvas(self.window, width = 550, height = 840)
         self.canvas.pack()
 
-        self.main_menu_image = PhotoImage(file="main_menu_image.ppm")# podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
+        self.main_menu_image = PhotoImage(file=self.graphic_theme)# podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
         self.canvas.create_text(275, 80, text = "Nongram game", font = ('Comic Sans MS', 50, 'bold italic'))
@@ -135,11 +187,11 @@ class Nonogram():
         self.clearwin()
 
         # Tworzenie przestrzeni oraz wypelnianie obrazkiem, dodawanie tekstu
-        self.canvas = Canvas(self.window, width=550, height=700)
+        self.canvas = Canvas(self.window, width=550, height=840)
         self.canvas.pack()
 
         self.main_menu_image = PhotoImage(
-            file="main_menu_image.ppm")  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
+            file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
         self.canvas.create_text(275, 50, text="OPCJE", font=('Comic Sans MS', 30, 'bold italic'))
@@ -148,6 +200,11 @@ class Nonogram():
                                    text = 'Resetuj postepy', width = 20, height = 1, bd = 5,
                                    font=('Comic Sans MS', 20, 'bold italic'))
         self.reset_button.place(x=100, y=200, in_=self.window)
+
+        self.chose_theme_button = Button(self.window, command=lambda: self.chose_theme(),
+                                   text='Zmień tło', width=20, height=1, bd=5,
+                                   font=('Comic Sans MS', 20, 'bold italic'))
+        self.chose_theme_button.place(x=100, y=300, in_=self.window)
 
         self.return_to_menu = Button(self.window, command = lambda: self.back_to_menu(), text='Powrot',
                                      width=20, height=1, bd=5, font=('Comic Sans MS', 20, 'bold italic'))
