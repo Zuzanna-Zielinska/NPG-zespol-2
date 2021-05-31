@@ -28,7 +28,7 @@ class Nonogram():
         self.button_theme_dictionary = {"Kot patrzący w dal" : ['papaya whip', 'OrangeRed4'],
                                  "Miasto w nocy" : ['papaya whip', 'burlywood2'],
                                  "Róża" : ['papaya whip', 'aquamarine4']}
-        self.font_theme = ['Harlow Solid Italic', 'Goudy Old Style', 'Goudy Old Style', 'Calibri', 'Lucida Handwriting', 'Forte']
+        self.font_theme = ['Harlow Solid Italic', 'Times New Roman', 'Times New Roman', 'Calibri', 'Lucida Handwriting', 'Forte']
 
         self.main_menu()
 
@@ -58,7 +58,7 @@ class Nonogram():
         self.canvas.create_text(274, 51,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
         self.canvas.create_text(276, 51,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
         self.canvas.create_text(276, 49,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
-        self.canvas.create_text(275, 50,fill = 'black', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(275, 50,fill = 'black', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
 
         # Tworzenie listy
         self.listbox = Listbox(self.window, width=30, height=30)
@@ -74,7 +74,7 @@ class Nonogram():
         self.button_options_menu.place(x=220, y=600, in_=self.window)
 
         # Przycisk wracajacy do menu
-        self.return_to_menu = Button(self.window, command=lambda: self.back_to_menu(), text="Powrot do menu",
+        self.return_to_menu = Button(self.window, command=lambda: self.back_to_menu(), text="Powrót do menu",
                                      width=20, height=1, bd=5, font=(self.font_theme[2], 10, 'bold italic'), background = self.button_theme[0])
         self.return_to_menu.place(x=180, y=660, in_=self.window)
 
@@ -118,7 +118,7 @@ class Nonogram():
         self.button_options_menu.place(x = 220, y = 600, in_ = self.window)
 
         # Przycisk wracajacy do menu
-        self.return_to_menu = Button(self.window, command=lambda: self.back_to_menu(), text="Powrot do menu",
+        self.return_to_menu = Button(self.window, command=lambda: self.back_to_menu(), text="Powrót do menu",
                                      width=20, height=1, bd=5, font=(self.font_theme[2], 10, 'bold italic'), background = self.button_theme[0])
         self.return_to_menu.place(x=180, y=660, in_=self.window)
 
@@ -173,7 +173,7 @@ class Nonogram():
 
         # Definiowanie i dodawanie przyciskow
         # Przycisk do wyjscia (niegotowy)
-        self.exit_button = Button(self.window, command = lambda: self.window.destroy(), text = 'WYJSCIE', width = 10,
+        self.exit_button = Button(self.window, command = lambda: self.window.destroy(), text = 'WYJŚCIE', width = 10,
                                    height = 1, bd = 5, font = (self.font_theme[2], 35, 'bold italic'), background = self.button_theme[0])
         self.exit_button.place(x = 120, y = 570, in_ = self.window)
 
@@ -225,11 +225,11 @@ class Nonogram():
         self.reset_button.place(x=100, y=200, in_=self.window)
 
         self.chose_theme_button = Button(self.window, command=lambda: self.chose_theme(),
-                                   text='Zmien tlo', width=20, height=1, bd=5,
+                                   text='Zmień tło', width=20, height=1, bd=5,
                                    font=(self.font_theme[2], 20, 'bold italic'), background = self.button_theme[0])
         self.chose_theme_button.place(x=100, y=300, in_=self.window)
 
-        self.return_to_menu = Button(self.window, command = lambda: self.back_to_menu(), text='Powrot',
+        self.return_to_menu = Button(self.window, command = lambda: self.back_to_menu(), text='Powrót',
                                      width=20, height=1, bd=5, font=(self.font_theme[2], 20, 'bold italic'), background = self.button_theme[0])
         self.return_to_menu.place(x=100, y=600, in_=self.window)
 
