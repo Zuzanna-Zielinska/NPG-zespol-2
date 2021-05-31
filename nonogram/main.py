@@ -165,11 +165,11 @@ class Nonogram():
         self.main_menu_image = PhotoImage(file=self.graphic_theme)# podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
-        self.canvas.create_text(273, 78, fill = 'white', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
-        self.canvas.create_text(273, 82, fill = 'white', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
-        self.canvas.create_text(277, 82, fill = 'white', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
-        self.canvas.create_text(277, 78, fill = 'white', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
-        self.canvas.create_text(275, 80, fill = 'black', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(273, 78, fill = 'white', text = "Nonogram", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(273, 82, fill = 'white', text = "Nonogram", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(277, 82, fill = 'white', text = "Nonogram", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(277, 78, fill = 'white', text = "Nonogram", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(275, 80, fill = 'black', text = "Nonogram", font = (self.font_theme[0], 50, 'bold italic'))
 
         # Definiowanie i dodawanie przyciskow
         # Przycisk do wyjscia (niegotowy)
