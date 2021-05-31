@@ -20,11 +20,11 @@ class Nonogram():
         self.window = Tk()
         self.window.title('Nonogram')
 
-        self.graphic_theme = "cat_and_window.ppm"
+        self.graphic_theme = sv.load_list_from_file('Motywy.pkl')[0]
         self.theme_dictionary = {"Kot patrzący w dal" : "cat_and_window.ppm",
                                  "Miasto w nocy" : "town.ppm",
                                  "Róża" : "rose.ppm"}
-        self.button_theme = ['papaya whip', 'OrangeRed4']
+        self.button_theme = sv.load_list_from_file('Motywy.pkl')[1]
         self.button_theme_dictionary = {"Kot patrzący w dal" : ['papaya whip', 'OrangeRed4'],
                                  "Miasto w nocy" : ['papaya whip', 'burlywood2'],
                                  "Róża" : ['papaya whip', 'aquamarine4']}
@@ -54,11 +54,11 @@ class Nonogram():
             file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
-        self.canvas.create_text(274, 49,fill = 'white', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
-        self.canvas.create_text(274, 51,fill = 'white', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
-        self.canvas.create_text(276, 51,fill = 'white', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
-        self.canvas.create_text(276, 49,fill = 'white', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
-        self.canvas.create_text(275, 50,fill = 'black', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(274, 49,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(274, 51,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(276, 51,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(276, 49,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(275, 50,fill = 'black', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
 
         # Tworzenie listy
         self.listbox = Listbox(self.window, width=30, height=30)
@@ -149,6 +149,7 @@ class Nonogram():
         self.chosen_theme = (self.listbox.get(self.listbox.curselection()))
         self.graphic_theme = self.theme_dictionary[self.chosen_theme]
         self.button_theme = self.button_theme_dictionary[self.chosen_theme]
+        sv.save_object([self.graphic_theme, self.button_theme], 'Motywy.pkl')
 
         self.back_to_menu()
 
@@ -164,11 +165,11 @@ class Nonogram():
         self.main_menu_image = PhotoImage(file=self.graphic_theme)# podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
-        self.canvas.create_text(273, 78, fill = 'white', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
-        self.canvas.create_text(273, 82, fill = 'white', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
-        self.canvas.create_text(277, 82, fill = 'white', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
-        self.canvas.create_text(277, 78, fill = 'white', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
-        self.canvas.create_text(275, 80, fill = 'black', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(273, 78, fill = 'white', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(273, 82, fill = 'white', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(277, 82, fill = 'white', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(277, 78, fill = 'white', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(275, 80, fill = 'black', text = "Nonogram game", font = (self.font_theme[0], 50, 'bold italic'))
 
         # Definiowanie i dodawanie przyciskow
         # Przycisk do wyjscia (niegotowy)
@@ -193,7 +194,7 @@ class Nonogram():
         self.debug_button.place(x=10, y=10, in_=self.window)
 
         # Przycisk startujacy w trybie DEBUG
-        self.start_button = Button(self.window, command=lambda: self.start_game(self.nonogram), text='DEBUG_START', width=12,
+        self.start_button = Button(self.window, command=lambda: self.start_game(self.nonogram), text='DEBUG_START', width=15,
                                    height=1, bd=5, font=(self.font_theme[2], 10, 'bold italic'), background = self.button_theme[1])
         self.start_button.place(x=120, y=10, in_=self.window)
 
