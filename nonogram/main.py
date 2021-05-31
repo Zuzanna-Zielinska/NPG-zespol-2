@@ -28,7 +28,7 @@ class Nonogram():
         self.button_theme_dictionary = {"Kot patrzący w dal" : ['papaya whip', 'OrangeRed4'],
                                  "Miasto w nocy" : ['papaya whip', 'burlywood2'],
                                  "Róża" : ['papaya whip', 'aquamarine4']}
-        self.font_theme = ['Harlow Solid Italic', 'Goudy Old Style', 'Goudy Old Style', 'Lucida Handwriting', 'Forte']
+        self.font_theme = ['Harlow Solid Italic', 'Goudy Old Style', 'Goudy Old Style', 'Calibri', 'Lucida Handwriting', 'Forte']
 
         self.main_menu()
 
@@ -464,7 +464,7 @@ class Nonogram():
             self.canvas.create_line(0, i * self.size_of_grid, self.size_of_board, i * self.size_of_grid, width = 2)
 
         self.canvas.create_text(self.size_of_board / 2, self.size_of_board + 100,
-                                text="Naciśnij enter aby wrócić do menu", font=(self.font_theme[1], 19, 'bold italic'))
+                                text="Naciśnij enter aby wrócić do menu", font=(self.font_theme[3], 19, 'bold italic'))
 
     # Funkcja obslugujaca klinkniecie gracza w trakcie rozgrywki
     def click(self, event):
@@ -481,9 +481,9 @@ class Nonogram():
             # Czynnosci podjete w wypadku wygranej
             if self.win == True:
                 self.canvas.create_text(self.size_of_outskirts / 2,self.size_of_outskirts / 2, text = "Wygrałeś!",
-                                        font=(self.font_theme[1], 19, 'bold italic'))
+                                        font=(self.font_theme[3], 19, 'bold italic'))
                 self.canvas.create_text(self.size_of_outskirts / 2, self.size_of_outskirts / 2 + 30,
-                 text="Naciśnij enter aby kontynuować", font=(self.font_theme[1], 8, 'bold italic'))
+                 text="Naciśnij enter aby kontynuować", font=(self.font_theme[3], 8, 'bold italic'))
                 sv.change_to_solved(True,self.chosen_level.id,"Stworzone_z_gui.pkl")
 
     def click_x(self, event):
