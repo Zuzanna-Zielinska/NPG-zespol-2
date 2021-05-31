@@ -20,10 +20,15 @@ class Nonogram():
         self.window = Tk()
         self.window.title('Nonogram')
 
-        self.graphic_theme = "rose.ppm"
+        self.graphic_theme = "cat_and_window.ppm"
         self.theme_dictionary = {"Kot patrzący w dal" : "cat_and_window.ppm",
                                  "Miasto w nocy" : "town.ppm",
                                  "Róża" : "rose.ppm"}
+        self.button_theme = ['papaya whip', 'OrangeRed4']
+        self.button_theme_dictionary = {"Kot patrzący w dal" : ['papaya whip', 'OrangeRed4'],
+                                 "Miasto w nocy" : ['papaya whip', 'burlywood2'],
+                                 "Róża" : ['papaya whip', 'aquamarine4']}
+        self.font_theme = ['Harlow Solid Italic', 'Goudy Old Style', 'Goudy Old Style', 'Lucida Handwriting', 'Forte']
 
         self.main_menu()
 
@@ -49,7 +54,11 @@ class Nonogram():
             file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
-        self.canvas.create_text(275, 50, text="Wybór tła", font=('Comic Sans MS', 20, 'bold italic'))
+        self.canvas.create_text(274, 49,fill = 'white', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(274, 51,fill = 'white', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(276, 51,fill = 'white', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(276, 49,fill = 'white', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(275, 50,fill = 'black', text="Wybór tła", font=(self.font_theme[1], 20, 'bold italic'))
 
         # Tworzenie listy
         self.listbox = Listbox(self.window, width=30, height=30)
@@ -61,12 +70,12 @@ class Nonogram():
 
         # Przycisk do wybrania, po nacisnieciu przekazuje wybrany nonogram do zmiennej i zaczyna gre
         self.button_options_menu = Button(self.window, command=lambda: self.choose_theme_menu_click(), text="Wybierz",
-                                          font=('Comic Sans MS', 15, 'bold italic'))
+                                          font=(self.font_theme[2], 15, 'bold italic'), background = self.button_theme[0])
         self.button_options_menu.place(x=220, y=600, in_=self.window)
 
         # Przycisk wracajacy do menu
         self.return_to_menu = Button(self.window, command=lambda: self.back_to_menu(), text="Powrot do menu",
-                                     width=20, height=1, bd=5, font=('Comic Sans MS', 10, 'bold italic'))
+                                     width=20, height=1, bd=5, font=(self.font_theme[2], 10, 'bold italic'), background = self.button_theme[0])
         self.return_to_menu.place(x=180, y=660, in_=self.window)
 
         # Druga, alternatywna opcja wyboru
@@ -87,7 +96,11 @@ class Nonogram():
             file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
-        self.canvas.create_text(275, 50, text="Wybór poziomu", font=('Comic Sans MS', 20, 'bold italic'))
+        self.canvas.create_text(274, 49,fill = 'white', text="Wybór poziomu", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(274, 51,fill = 'white', text="Wybór poziomu", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(276, 51,fill = 'white', text="Wybór poziomu", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(276, 49,fill = 'white', text="Wybór poziomu", font=(self.font_theme[1], 20, 'bold italic'))
+        self.canvas.create_text(275, 50,fill = 'black', text="Wybór poziomu", font=(self.font_theme[1], 20, 'bold italic'))
 
         # Tworzenie listy
         self.listbox = Listbox(self.window, width = 30, height = 30)
@@ -101,12 +114,12 @@ class Nonogram():
 
         # Przycisk do wybrania, po nacisnieciu przekazuje wybrany nonogram do zmiennej i zaczyna gre
         self.button_options_menu = Button(self.window, command = lambda: self.choose_level_menu_click(), text ="Wybierz",
-                                          font = ('Comic Sans MS', 15, 'bold italic'))
+                                          font = (self.font_theme[2], 15, 'bold italic'), background = self.button_theme[0])
         self.button_options_menu.place(x = 220, y = 600, in_ = self.window)
 
         # Przycisk wracajacy do menu
         self.return_to_menu = Button(self.window, command=lambda: self.back_to_menu(), text="Powrot do menu",
-                                     width=20, height=1, bd=5, font=('Comic Sans MS', 10, 'bold italic'))
+                                     width=20, height=1, bd=5, font=(self.font_theme[2], 10, 'bold italic'), background = self.button_theme[0])
         self.return_to_menu.place(x=180, y=660, in_=self.window)
 
         # Druga, alternatywna opcja wyboru
@@ -135,6 +148,7 @@ class Nonogram():
         # Nazwa pliku
         self.chosen_theme = (self.listbox.get(self.listbox.curselection()))
         self.graphic_theme = self.theme_dictionary[self.chosen_theme]
+        self.button_theme = self.button_theme_dictionary[self.chosen_theme]
 
         self.back_to_menu()
 
@@ -150,33 +164,37 @@ class Nonogram():
         self.main_menu_image = PhotoImage(file=self.graphic_theme)# podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
-        self.canvas.create_text(275, 80, text = "Nongram game", font = ('Comic Sans MS', 50, 'bold italic'))
+        self.canvas.create_text(273, 78, fill = 'white', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(273, 82, fill = 'white', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(277, 82, fill = 'white', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(277, 78, fill = 'white', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
+        self.canvas.create_text(275, 80, fill = 'black', text = "Nongram game", font = (self.font_theme[0], 50, 'bold italic'))
 
         # Definiowanie i dodawanie przyciskow
         # Przycisk do wyjscia (niegotowy)
         self.exit_button = Button(self.window, command = lambda: self.window.destroy(), text = 'WYJSCIE', width = 10,
-                                   height = 1, bd = 5, font = ('Comic Sans MS', 35, 'bold italic'))
+                                   height = 1, bd = 5, font = (self.font_theme[2], 35, 'bold italic'), background = self.button_theme[0])
         self.exit_button.place(x = 120, y = 570, in_ = self.window)
 
         # Przycisk do wejscia do opcji (niegotowy)
         self.option_button = Button(self.window, command = lambda: self.options_menu(), text = 'OPCJE', width=10,
-                                   height = 1, bd = 5, font = ('Comic Sans MS', 35, 'bold italic'))
+                                   height = 1, bd = 5, font = (self.font_theme[2], 35, 'bold italic'), background = self.button_theme[0])
         self.option_button.place(x=120, y=370, in_=self.window)
 
         # Przycisk do startu gry
         self.start_button = Button(self.window, command = lambda: self.choose_level_menu(), text ='GRAJ', width = 10,
-                                   height = 1, bd = 5, font = ('Comic Sans MS', 35, 'bold italic'))
+                                   height = 1, bd = 5, font = (self.font_theme[2], 35, 'bold italic'), background = self.button_theme[0])
         self.start_button.place(x=120, y=170, in_=self.window)
 
         # Przycisk do wyboru poziomow z poziomu eksploratora za pomoca funkcji set_nonogram DEBUG
 
         self.debug_button = Button(self.window, command=lambda: self.set_nonogram(), text='DEBUG', width=10,
-                                    height=1, bd=5, font=('Comic Sans MS', 10, 'bold italic'))
+                                    height=1, bd=5, font=(self.font_theme[2], 10, 'bold italic'), background = self.button_theme[1])
         self.debug_button.place(x=10, y=10, in_=self.window)
 
         # Przycisk startujacy w trybie DEBUG
         self.start_button = Button(self.window, command=lambda: self.start_game(self.nonogram), text='DEBUG_START', width=12,
-                                   height=1, bd=5, font=('Comic Sans MS', 10, 'bold italic'))
+                                   height=1, bd=5, font=(self.font_theme[2], 10, 'bold italic'), background = self.button_theme[1])
         self.start_button.place(x=120, y=10, in_=self.window)
 
     # Funkcja obslugujaca menu opcji
@@ -194,20 +212,24 @@ class Nonogram():
             file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
 
-        self.canvas.create_text(275, 50, text="OPCJE", font=('Comic Sans MS', 30, 'bold italic'))
+        self.canvas.create_text(274, 49, fill = 'white', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
+        self.canvas.create_text(274, 51, fill = 'white', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
+        self.canvas.create_text(276, 51, fill = 'white', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
+        self.canvas.create_text(276, 49, fill = 'white', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
+        self.canvas.create_text(275, 50, fill = 'black', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
 
         self.reset_button = Button(self.window, command = lambda: sv.change_all_to_unsolved("stworzone_z_gui.pkl"),
                                    text = 'Resetuj postepy', width = 20, height = 1, bd = 5,
-                                   font=('Comic Sans MS', 20, 'bold italic'))
+                                   font=(self.font_theme[2], 20, 'bold italic'), background = self.button_theme[0])
         self.reset_button.place(x=100, y=200, in_=self.window)
 
         self.chose_theme_button = Button(self.window, command=lambda: self.chose_theme(),
-                                   text='Zmień tło', width=20, height=1, bd=5,
-                                   font=('Comic Sans MS', 20, 'bold italic'))
+                                   text='Zmien tlo', width=20, height=1, bd=5,
+                                   font=(self.font_theme[2], 20, 'bold italic'), background = self.button_theme[0])
         self.chose_theme_button.place(x=100, y=300, in_=self.window)
 
         self.return_to_menu = Button(self.window, command = lambda: self.back_to_menu(), text='Powrot',
-                                     width=20, height=1, bd=5, font=('Comic Sans MS', 20, 'bold italic'))
+                                     width=20, height=1, bd=5, font=(self.font_theme[2], 20, 'bold italic'), background = self.button_theme[0])
         self.return_to_menu.place(x=100, y=600, in_=self.window)
 
     # Funckja wracajaca do menu
@@ -441,7 +463,7 @@ class Nonogram():
             self.canvas.create_line(0, i * self.size_of_grid, self.size_of_board, i * self.size_of_grid, width = 2)
 
         self.canvas.create_text(self.size_of_board / 2, self.size_of_board + 100,
-                                text="Naciśnij enter aby wrócić do menu", font=('Comic Sans MS', 19, 'bold italic'))
+                                text="Naciśnij enter aby wrócić do menu", font=(self.font_theme[1], 19, 'bold italic'))
 
     # Funkcja obslugujaca klinkniecie gracza w trakcie rozgrywki
     def click(self, event):
@@ -458,9 +480,9 @@ class Nonogram():
             # Czynnosci podjete w wypadku wygranej
             if self.win == True:
                 self.canvas.create_text(self.size_of_outskirts / 2,self.size_of_outskirts / 2, text = "Wygrałeś!",
-                                        font=('Comic Sans MS', 19, 'bold italic'))
+                                        font=(self.font_theme[1], 19, 'bold italic'))
                 self.canvas.create_text(self.size_of_outskirts / 2, self.size_of_outskirts / 2 + 30,
-                 text="Naciśnij enter aby kontynuować", font=('Comic Sans MS', 8, 'bold italic'))
+                 text="Naciśnij enter aby kontynuować", font=(self.font_theme[1], 8, 'bold italic'))
                 sv.change_to_solved(True,self.chosen_level.id,"Stworzone_z_gui.pkl")
 
     def click_x(self, event):
