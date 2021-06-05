@@ -20,15 +20,19 @@ class Nonogram():
         self.window = Tk()
         self.window.title('Nonogram')
 
-        self.graphic_theme = sv.load_list_from_file('Motywy.pkl')[0]
+        self.graphic_theme = sv.load_list_from_file('Motywy.pkl')[0] #Wczytanie ostatnio wybranego tła
         self.theme_dictionary = {"Kot patrzący w dal" : "cat_and_window.ppm",
                                  "Miasto w nocy" : "town.ppm",
                                  "Róża" : "rose.ppm"}
-        self.button_theme = sv.load_list_from_file('Motywy.pkl')[1]
+        
+        self.button_theme = sv.load_list_from_file('Motywy.pkl')[1] #Wczytanie ostatnio wybranego koloru przycisków
+        #Kolejno: kolor zwykłych przycisków, kolor debug i debug_start
         self.button_theme_dictionary = {"Kot patrzący w dal" : ['papaya whip', 'OrangeRed4'],
                                  "Miasto w nocy" : ['papaya whip', 'burlywood2'],
                                  "Róża" : ['papaya whip', 'aquamarine4']}
-        self.font_theme = ['Harlow Solid Italic', 'Times New Roman', 'Times New Roman', 'Calibri', 'Lucida Handwriting', 'Forte']
+        
+        #Kolejno: czcionka tytułu, czcionka nieklikalnego tekstu, czcionka przycisków
+        self.font_theme = ['Harlow Solid Italic', 'Times New Roman', 'Times New Roman'] 
 
         self.main_menu()
 
@@ -53,7 +57,8 @@ class Nonogram():
         self.main_menu_image = PhotoImage(
             file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
-
+        
+        #Czarny tekst "Wybór tla" z białą obwódką
         self.canvas.create_text(274, 49,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
         self.canvas.create_text(274, 51,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
         self.canvas.create_text(276, 51,fill = 'white', text="Wybór tla", font=(self.font_theme[1], 20, 'bold italic'))
@@ -95,7 +100,8 @@ class Nonogram():
         self.main_menu_image = PhotoImage(
             file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
-
+        
+        #Czarny tekst "Wybór poziomu" z białą obwódką
         self.canvas.create_text(274, 49,fill = 'white', text="Wybór poziomu", font=(self.font_theme[1], 20, 'bold italic'))
         self.canvas.create_text(274, 51,fill = 'white', text="Wybór poziomu", font=(self.font_theme[1], 20, 'bold italic'))
         self.canvas.create_text(276, 51,fill = 'white', text="Wybór poziomu", font=(self.font_theme[1], 20, 'bold italic'))
@@ -149,6 +155,8 @@ class Nonogram():
         self.chosen_theme = (self.listbox.get(self.listbox.curselection()))
         self.graphic_theme = self.theme_dictionary[self.chosen_theme]
         self.button_theme = self.button_theme_dictionary[self.chosen_theme]
+        
+        #Zapis ostatnio wybranej grafiki i kolorów przycisków
         sv.save_object([self.graphic_theme, self.button_theme], 'Motywy.pkl')
 
         self.back_to_menu()
@@ -164,7 +172,8 @@ class Nonogram():
 
         self.main_menu_image = PhotoImage(file=self.graphic_theme)# podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
-
+        
+        #Czarny tytuł gry z białą obwódką
         self.canvas.create_text(273, 78, fill = 'white', text = "Nonogram", font = (self.font_theme[0], 50, 'bold italic'))
         self.canvas.create_text(273, 82, fill = 'white', text = "Nonogram", font = (self.font_theme[0], 50, 'bold italic'))
         self.canvas.create_text(277, 82, fill = 'white', text = "Nonogram", font = (self.font_theme[0], 50, 'bold italic'))
@@ -212,12 +221,13 @@ class Nonogram():
         self.main_menu_image = PhotoImage(
             file=self.graphic_theme)  # podobno png mialy nie dzialac wiec ich nie uzywam choc dzialaja
         self.image = self.canvas.create_image(550, 0, anchor=NE, image=self.main_menu_image)
-
-        self.canvas.create_text(274, 49, fill = 'white', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
-        self.canvas.create_text(274, 51, fill = 'white', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
-        self.canvas.create_text(276, 51, fill = 'white', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
-        self.canvas.create_text(276, 49, fill = 'white', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
-        self.canvas.create_text(275, 50, fill = 'black', text="OPCJE", font=(self.font_theme[1], 30, 'bold italic'))
+        
+        #Czarny tekst "Opcje" z białą obwódką
+        self.canvas.create_text(274, 49, fill = 'white', text="Opcje", font=(self.font_theme[1], 30, 'bold italic'))
+        self.canvas.create_text(274, 51, fill = 'white', text="Opcje", font=(self.font_theme[1], 30, 'bold italic'))
+        self.canvas.create_text(276, 51, fill = 'white', text="Opcje", font=(self.font_theme[1], 30, 'bold italic'))
+        self.canvas.create_text(276, 49, fill = 'white', text="Opcje", font=(self.font_theme[1], 30, 'bold italic'))
+        self.canvas.create_text(275, 50, fill = 'black', text="Opcje", font=(self.font_theme[1], 30, 'bold italic'))
 
         self.reset_button = Button(self.window, command = lambda: sv.change_all_to_unsolved("stworzone_z_gui.pkl"),
                                    text = 'Resetuj postepy', width = 20, height = 1, bd = 5,
