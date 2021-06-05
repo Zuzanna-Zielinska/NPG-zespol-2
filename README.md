@@ -1,22 +1,18 @@
 # Zawartość
 
 ### Nonogram
-(pliki potrzebne do działania programu)
+Pliki używane przez program
 
--pusty
+### Archiwum
+Pliki niepotrzebne do działania programu
 
-### Śmieci
-(pliki niepotrzebne do działania programu)
+-stare wersje programu
 
--testy pierwszych rozwiązań
+-aktualne grafiki do menu (zapisane w formacie, którego gra nie czyta)
 
--koncept
+-stara grafika do menu
 
-### Nonogram_test
-(pliki do przeniesienia w przyszłości do dwóch powyższych folderów)
+-prezentacja sposobu kodowania obrazów w pythonie
 
--skrypty służące do wypełniania przez gracza nonogramu
-
--skrypt z funkacjami do zapisu i wczytywania obrazów z plików
-
--plik demonstrujący powyższe funkcje
+### Dokumentacja
+Pliki tekstowe pomocne w organizacji projektu

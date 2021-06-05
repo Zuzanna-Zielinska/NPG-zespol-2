@@ -8,10 +8,10 @@ gui_test.py - użycie gui_zapis i zapisanie obrazka
 
 main.py - główny plik z grą
 
-save_and_load - plki z funkcjami zapisu i ładowani obrazków
+save_and_load.py - plki z funkcjami zapisu i ładowania obrazków
 
 Stworzone_z_gui.pkl - plik z obrazkami stworzonymi za pomocą gui_test
 
-Zmiana_nazwy_obrazów_z_gui.py - pomocniczy skrypt, w którym można zmienić nazwy obrazów
+Motywy.pkl - plik z zapisanym tagiem do ostatniowybranego motywu
 
 .ppm - możliwe tła
