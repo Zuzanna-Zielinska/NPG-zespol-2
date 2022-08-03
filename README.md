@@ -5,7 +5,7 @@
 Projekt został stworzony na potrzeby studiów Automatyki i Robotyki w Akademi Górniczo Hutniczej. Napisano go w języku Python z użyciem biblioteki <i>tkinter</i>.
 
 ## Sposób rozwiązywania nonogramów
-a
+aa
 Nonogram to gra polegająca na wypełnieniu obrazka na podstawie zapisanych przy krawędziach planszy liczb.
 
 Białe pola reprezentują tło, czarne są wypełnione przez gracza, iksy to pola, co do których gracz ma pewność, że nie mają być wypełnione.
